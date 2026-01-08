@@ -6,8 +6,8 @@ const getProduct = async (req, res) => {
 }
 
 const postProducts = async (req, res) => {
-    const {image, name, desciption} = req.body
-    const product = {image, name, desciption}
+    const {image} = req.body
+    const product = {image}
     await ProductModel.create(product)
     res.json(product)
 }
