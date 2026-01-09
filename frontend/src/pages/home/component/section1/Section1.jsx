@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 const Section1 = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.product.product);
-  const loading = useSelector((state) => state.product.loading);
+
+  const { product: data, loading } = useSelector((state) => state.product);
 
   const { t } = useTranslation();
 
@@ -15,28 +15,41 @@ const Section1 = () => {
     dispatch(getProductThunk());
   }, [dispatch]);
 
-  const firstImage = data && data.length > 0 ? data[0].image : '/fallback-machine.png';
-  const secondImage = data && data.length > 1 ? data[1].image : firstImage;
+  // Loading zamanı heç nə göstərmirik
+  if (loading) return null;
+
+  // Backend-dən minimum 2 şəkil gəlməlidir
+  if (!data || data.length < 2) return null;
+
+  // Şəkillər birbaşa backend-dən gələn http URL-lərdir
+  const firstImage = data[0].image;
+  const secondImage = data[1].image;
 
   return (
     <section className={styles.mains}>
       <div className={styles.container}>
+
+        {/* LEFT SIDE */}
         <div className={styles.leftSide}>
-          <img 
-            src={firstImage} 
-            alt="DPF Cleaning Machine" 
-            className={styles.mainImage} 
+          <img
+            src={firstImage}
+            alt="DPF Cleaning Machine"
+            className={styles.mainImage}
           />
-          
+
           <div className={styles.textOverlay}>
             <p className={styles.subtitle}>
               {t('subtitle')}
             </p>
+
             <h1 className={styles.title}>
-              {t('titlePart1')} 
-              <span className={styles.highlight}>{t('titleHighlight')}</span>
-              {t('titlePart2') && ' ' + t('titlePart2')}
+              {t('titlePart1')}{' '}
+              <span className={styles.highlight}>
+                {t('titleHighlight')}
+              </span>{' '}
+              {t('titlePart2')}
             </h1>
+
             <p className={styles.description}>
               {t('description')}
               <span className={styles.secondLine}>
@@ -46,13 +59,15 @@ const Section1 = () => {
           </div>
         </div>
 
+        {/* RIGHT SIDE */}
         <div className={styles.rightSide}>
-          <img 
-            src={secondImage} 
-            alt="DPF Cleaner Side View" 
-            className={styles.sideImage} 
+          <img
+            src={secondImage}
+            alt="DPF Cleaner Side View"
+            className={styles.sideImage}
           />
         </div>
+
       </div>
     </section>
   );

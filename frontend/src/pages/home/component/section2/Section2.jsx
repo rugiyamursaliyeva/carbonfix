@@ -1,22 +1,24 @@
-import React from 'react'
-import styles from '../section2/Section2.module.scss'
+import React from "react";
+import styles from "../section2/Section2.module.scss";
+import { useTranslation } from "react-i18next";
 
 const Section2 = () => {
+  const { t } = useTranslation();
+
   return (
     <section className={styles.main}>
       <div className={styles.text}>
         <div className={styles.head}>
-          <h1>Where does the cleaning system act?</h1>
+          <p>{t("section2Title")}</p>
         </div>
+
         <div className={styles.desciption}>
-          <p>Our cleaning equipment acts directly on the core of the particulate filter, 
-            removing soot, ash, and solid residues that block the flow of exhaust gases.</p>
-          <span>Deep cleaning allows the DPF to recover its original filtering capacity and comply with emission limits.</span>  
+          <p>{t("section2Desc")}</p>
+          <span>{t("section2Span")}</span>
         </div>
       </div>
-
     </section>
-  )
-}
+  );
+};
 
-export default Section2
+export default Section2;
