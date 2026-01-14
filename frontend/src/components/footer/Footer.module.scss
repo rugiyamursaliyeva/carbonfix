@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+.footer {
+  position: relative;
+  background-color: #0D0D0D;
+  color: white;
+  overflow: hidden;
+  margin-top: 5rem;
+  font-family: "Roboto", sans-serif;
+
+  .background {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.25;
+    z-index: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+
+  .container {
+    position: relative;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 2rem;
+    z-index: 3;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 1.3fr 0.9fr 0.9fr;
+      align-items: start;
+    }
+  }
+
+  .logoSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+
+    // Logo hissəsi: çox az aşağı + biraz sola
+    top: -4rem;           // əvvəl -4.5rem idi → bir az aşağı salındı
+    left: -0.8rem;        // əvvəl -1.25rem idi → sola azaldıldı (daha az mənfi)
+
+    .logoImg {
+      width: 9.375rem;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .description {
+      color: #d1d5db;
+      line-height: 1.6;
+      font-weight: 400;
+      font-size: 0.95rem;
+    }
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    color: #ffeb3b;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.39rem;
+      height: 1px;
+      width: 6.25rem;
+      background-color: #808080;
+    }
+  }
+
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+
+    .contactItem {
+      display: flex;
+      flex-direction: column;
+
+      .label {
+        color: #9ca3af;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .link,
+      .text {
+        color: #d1d5db;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .socialIcons {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 1rem;
+
+    .iconLink {
+      width: 2.2rem;
+      height: 2.2rem;
+      background-color: #0D0D0D;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d1d5db;
+      font-size: 1rem;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: #fbbf24;
+        color: #0D0D0D;
+      }
+
+      svg {
+        width: 1em;
+        height: 1em;
+      }
+    }
+  }
+
+  .bottom {
+    border-top: 1px solid #374151;
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    text-align: center;
+
+    .copyright {
+      color: #9ca3af;
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+  }
+
+  /* ==========================
+     RESPONSIVE: MOBILE
+  ========================== */
+  @media (max-width: 47.9375rem) { // <768px
+    .container {
+      padding: 2.5rem 1rem 1.5rem;
+    }
+
+    .logoSection {
+      top: -2rem;           // mobil üçün də bir az aşağı salındı
+      left: 0;
+      align-items: center;
+      text-align: center;
+      gap: 0.4rem;
+
+      .logoImg {
+        width: 8rem;
+      }
+
+      .description {
+        font-size: 0.85rem;
+        margin-top: 0.15rem;
+        line-height: 1.4;
+      }
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .section {
+      align-items: center;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+
+      &::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3.5rem;
+      }
+    }
+
+    .contactInfo {
+      align-items: center;
+      text-align: center;
+      gap: 0.7rem;
+
+      .contactItem {
+        .label {
+          font-size: 0.8rem;
+        }
+
+        .link,
+        .text {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .socialIcons {
+      justify-content: center;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+
+      .iconLink {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1rem;
+      }
+    }
+
+    .bottom {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+
+      .copyright {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

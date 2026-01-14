@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 
-const productShema = mongoose.Schema({
-    image:{type:String, required:true}
-}, {timestamps:true})
+const productShema = mongoose.Schema(
+  {
+    image: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
-const ProductModel = mongoose.model('Product', productShema)
+const ProductModel = mongoose.model("Product", productShema);
 
-export default ProductModel
+export default ProductModel;

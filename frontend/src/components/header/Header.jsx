@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../header/Header.module.scss";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { FaBars, FaTimes } from "react-icons/fa"; // Hər iki ikon
+import { FaBars, FaTimes } from "react-icons/fa";
+import axios from "axios";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logo, setLogo] = useState(null);
 
   const languages = [
     { code: "az", label: "AZ" },
@@ -23,25 +24,42 @@ const Header = () => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     setDropdownOpen(false);
+    setMobileMenuOpen(false);
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+  // Backend-dən ilk şəkli götür
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/product");
+        if (res.data.length > 0) {
+          setLogo(res.data[0].image); // birinci şəkil
+        }
+      } catch (error) {
+        console.error("Logo image load error:", error);
+      }
+    };
+    fetchLogo();
+  }, []);
+
   return (
     <section className={styles.header}>
       <div className={styles.head}>
         {/* Logo */}
         <div className={styles.logo}>
-          <span>CARBONFIX</span>
-        </div>
-
-        {/* Desktop Naviqasiya */}
-        <div className={styles.navs}>
-          <Link to="/">{t("home")}</Link>
-          <Link to="/about-us">{t("about")}</Link>
-          <Link to="/contact">{t("contact")}</Link>
+          {logo ? (
+            <img
+              src={`http://localhost:5000${logo}`}
+              alt="Logo"
+              className={styles.logoImg}
+            />
+          ) : (
+            <span>Loading...</span>
+          )}
         </div>
 
         {/* Desktop Dil Dropdown */}
@@ -71,7 +89,7 @@ const Header = () => {
           )}
         </div>
 
-        {/* Mobil Toggle (☰ ↔ ×) */}
+        {/* Mobil Toggle */}
         <button className={styles.mobileToggle} onClick={toggleMobileMenu}>
           {mobileMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
@@ -81,26 +99,11 @@ const Header = () => {
       <div
         className={`${styles.mobileMenu} ${mobileMenuOpen ? styles.active : ""}`}
       >
-        <div className={styles.mobileNavs}>
-          <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-            {t("home")}
-          </Link>
-          <Link to="/about-us" onClick={() => setMobileMenuOpen(false)}>
-            {t("about")}
-          </Link>
-          <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-            {t("contact")}
-          </Link>
-        </div>
-
         <div className={styles.mobileLangs}>
           {languages.map((lang) => (
             <button
               key={lang.code}
-              onClick={() => {
-                changeLanguage(lang.code);
-                setMobileMenuOpen(false);
-              }}
+              onClick={() => changeLanguage(lang.code)}
               className={lang.code === i18n.language ? styles.active : ""}
             >
               {lang.label}

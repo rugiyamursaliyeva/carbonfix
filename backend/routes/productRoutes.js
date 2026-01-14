@@ -1,11 +1,11 @@
-import express from 'express'
-import { deleteProducts, getProduct, postProducts } from '../controllers/productController.js'
+import express from "express";
+import { deleteProducts, getProduct, postProducts } from "../controllers/productController.js";
+import { upload } from "../middlewares/upload.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router
-.get('/product', getProduct)
-.post('/product', postProducts)
-.delete('/product/:id', deleteProducts)
+router.get("/product", getProduct);
+router.post("/product", upload.single("image"), postProducts);
+router.delete("/product/:id", deleteProducts);
 
-export default router
+export default router;

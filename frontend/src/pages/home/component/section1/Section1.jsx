@@ -6,63 +6,47 @@ import { useTranslation } from 'react-i18next';
 
 const Section1 = () => {
   const dispatch = useDispatch();
-
   const { product: data, loading } = useSelector((state) => state.product);
-
   const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getProductThunk());
   }, [dispatch]);
 
-  // Loading zamanı heç nə göstərmirik
   if (loading) return null;
 
-  // Backend-dən minimum 2 şəkil gəlməlidir
-  if (!data || data.length < 2) return null;
+  if (!data || data.length < 3) return null;
 
-  // Şəkillər birbaşa backend-dən gələn http URL-lərdir
-  const firstImage = data[0].image;
-  const secondImage = data[1].image;
+  // TAM URL əlavə et
+  const secondImage = `http://localhost:5000${data[1].image}`;
+  const thirdImage = `http://localhost:5000${data[2].image}`;
 
   return (
     <section className={styles.mains}>
       <div className={styles.container}>
 
-        {/* LEFT SIDE */}
         <div className={styles.leftSide}>
           <img
-            src={firstImage}
+            src={secondImage}
             alt="DPF Cleaning Machine"
             className={styles.mainImage}
           />
-
           <div className={styles.textOverlay}>
-            <p className={styles.subtitle}>
-              {t('subtitle')}
-            </p>
-
+            <p className={styles.subtitle}>{t('subtitle')}</p>
             <h1 className={styles.title}>
               {t('titlePart1')}{' '}
-              <span className={styles.highlight}>
-                {t('titleHighlight')}
-              </span>{' '}
+              <span className={styles.highlight}>{t('titleHighlight')}</span>{' '}
               {t('titlePart2')}
             </h1>
-
             <p className={styles.description}>
               {t('description')}
-              <span className={styles.secondLine}>
-                {t('descriptionSecondLine')}
-              </span>
             </p>
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className={styles.rightSide}>
           <img
-            src={secondImage}
+            src={thirdImage}
             alt="DPF Cleaner Side View"
             className={styles.sideImage}
           />

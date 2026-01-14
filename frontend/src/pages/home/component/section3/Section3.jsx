@@ -14,7 +14,7 @@ const Section3 = () => {
 
   useEffect(() => {
       dispatch(getProductThunk())
-  }, [])
+  }, [dispatch])
 
   // i18n-dən kartların məlumatlarını əldə edirik
   const cardsData = [
@@ -35,21 +35,28 @@ const Section3 = () => {
     }
   ]
 
+  if (loading) return null
+  if (!data || data.length < 6) return null // backend-dən minimum 6 şəkil olmalı
+
   return (
     <section className={styles.main}>
       <div className={styles.group}>
          <div className={styles.cards}>
-             {data && data.slice(2, 6).map((item, index) => {
-            const cardInfo = cardsData[index] || cardsData[0]
-            return(
-                <div className={styles.card} key={index}>
-                    <div className={styles.iconWrapper}>
-                      <img src={item.image} alt="" className={styles.icon}/>
-                    </div>
-                    <h3 className={styles.title}>{cardInfo.title}</h3>
-                    <p className={styles.desc}>{cardInfo.desc}</p>
-                </div>
-            )
+             {data.slice(3, 6).map((item, index) => {
+               const cardInfo = cardsData[index] || cardsData[0]
+               return(
+                   <div className={styles.card} key={index}>
+                       <div className={styles.iconWrapper}>
+                         <img
+                           src={`http://localhost:5000${item.image}`} // TAM URL əlavə edildi
+                           alt=""
+                           className={styles.icon}
+                         />
+                       </div>
+                       <h3 className={styles.title}>{cardInfo.title}</h3>
+                       <p className={styles.desc}>{cardInfo.desc}</p>
+                   </div>
+               )
            })}             
           </div>
       </div>

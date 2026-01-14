@@ -7,42 +7,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   font-family: "Roboto", sans-serif;
 
   .head {
-    position: relative; /* navs üçün vacib */
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+    width: 75%;
 
     .logo {
-      color: #ffff00;
-      font-family: "Fjalla One", sans-serif;
-      font-size: 23px;
-      font-weight: 400;
-    }
-
-    /* NAVS — TAM ORTA */
-    .navs {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 15px;
-      font-size: 14px;
 
-      a {
-        text-decoration: none;
-        color: white;
-        font-family: "Roboto", sans-serif;
-        transition: color 0.3s ease;
+      .logoImg {
+        width: 165px;
+        height: auto;
+        object-fit: contain;
+      }
 
-        &:hover {
-          color: #ffff00;
-        }
+      span {
+        color: #ffff00;
+        font-family: "Fjalla One", sans-serif;
+        font-size: 23px;
+        font-weight: 400;
       }
     }
 
@@ -115,7 +107,7 @@
     }
   }
 
-  /* MOBİL MENÜ */
+  /* Mobil Menü */
   .mobileMenu {
     position: absolute;
     top: 70px;
@@ -132,24 +124,6 @@
 
     &.active {
       display: flex;
-    }
-
-    .mobileNavs {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 25px;
-
-      a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        font-family: "Roboto", sans-serif;
-
-        &:hover {
-          color: #ffff00;
-        }
-      }
     }
 
     .mobileLangs {
@@ -184,10 +158,6 @@
     .head {
       width: 90%;
 
-      .navs {
-        display: none;
-      }
-
       .langs {
         display: none;
       }
@@ -203,7 +173,9 @@
   .header {
     .head {
       .logo {
-        font-size: 20px;
+        .logoImg {
+          width: 150px;
+        }
       }
     }
   }
