@@ -51,9 +51,9 @@ const Footer = () => {
                 e.target.src = "/images/default-footer-logo.jpg";
               }}
             />
-            <p className={styles.description}>
+            {/* <p className={styles.description}>
               {t("footer.description")}
-            </p>
+            </p> */}
           </div>
 
           {/* Contact */}

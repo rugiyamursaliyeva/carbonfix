@@ -1,5 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fjalla+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
+/* ======================= */
+/* ANIMATIONS */
+/* ======================= */
+
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================= */
+/* HEADER */
+/* ======================= */
+
 .header {
   width: 100%;
   height: 70px;
@@ -38,7 +57,7 @@
       }
     }
 
-    /* Dil dropdown */
+    /* Desktop dil dropdown */
     .langs {
       position: relative;
 
@@ -96,7 +115,7 @@
       }
     }
 
-    /* Hamburger / Close ikonu */
+    /* Hamburger */
     .mobileToggle {
       display: none;
       background: none;
@@ -107,44 +126,58 @@
     }
   }
 
-  /* Mobil Menü */
+  /* ======================= */
+  /* MOBILE MENU */
+  /* ======================= */
+
   .mobileMenu {
     position: absolute;
     top: 70px;
     left: 0;
     width: 100%;
     background-color: black;
-    padding: 30px 0;
+    padding: 25px 0;
     border-top: 1px solid #444;
     display: none;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 25px;
     z-index: 999;
+    opacity: 0;
+    transform: translateY(-15px);
 
     &.active {
       display: flex;
+      animation: menuSlideDown 0.4s ease forwards;
     }
 
     .mobileLangs {
+      width: 100%;
       display: flex;
-      gap: 20px;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
 
       button {
-        background: none;
-        border: none;
+        width: 75%;
+        background: #111;
+        border: 1px solid #444;
+        border-radius: 6px;
         color: white;
-        font-size: 16px;
+        font-size: 14px;
         cursor: pointer;
-        padding: 8px 12px;
+        padding: 10px 0;
         font-family: "Roboto", sans-serif;
+        text-align: center;
+        transition: 0.25s ease;
 
         &:hover {
-          color: #ffff00;
+          background: #222;
         }
 
         &.active {
-          color: #ffff00;
+          background: #ffff00;
+          color: black;
           font-weight: 600;
         }
       }
@@ -152,7 +185,10 @@
   }
 }
 
+/* ======================= */
 /* RESPONSIVE */
+/* ======================= */
+
 @media (max-width: 768px) {
   .header {
     .head {

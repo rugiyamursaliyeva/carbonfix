@@ -51,13 +51,11 @@
     align-items: flex-start;
     gap: 1rem;
     position: relative;
-
-    // Logo hissəsi: çox az aşağı + biraz sola
-    top: -4rem;           // əvvəl -4.5rem idi → bir az aşağı salındı
-    left: -0.8rem;        // əvvəl -1.25rem idi → sola azaldıldı (daha az mənfi)
+    left: 50px;
+    bottom: 75px;
 
     .logoImg {
-      width: 9.375rem;
+      width: 170px;
       height: auto;
       object-fit: contain;
     }
@@ -158,23 +156,29 @@
     }
   }
 
-  /* ==========================
-     RESPONSIVE: MOBILE
-  ========================== */
-  @media (max-width: 47.9375rem) { // <768px
+  @media (max-width: 47.9375rem) {
+    .background {
+      background-size: cover;
+      background-position: center top;
+      min-height: 300px;
+    }
+
     .container {
-      padding: 2.5rem 1rem 1.5rem;
+      padding: 2rem 1rem 1.5rem;
     }
 
     .logoSection {
-      top: -2rem;           // mobil üçün də bir az aşağı salındı
+      position: relative;
+      top: 0;
       left: 0;
+      bottom: 0;
       align-items: center;
       text-align: center;
       gap: 0.4rem;
+      margin-top: 0.5rem;
 
       .logoImg {
-        width: 8rem;
+        width: 9rem;
       }
 
       .description {
