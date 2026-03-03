@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 const Section1 = () => {
   const dispatch = useDispatch();
-  const { product: data, loading } = useSelector((state) => state.product);
+  const { products: data, loading } = useSelector((state) => state.product);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -15,11 +15,11 @@ const Section1 = () => {
 
   if (loading) return null;
 
-  if (!data || data.length < 3) return null;
+  if (!data || data.length === 0) return null;
 
-  // TAM URL əlavə et
-  const secondImage = `http://localhost:5000${data[1].image}`;
-  const thirdImage = `http://localhost:5000${data[2].image}`;
+  // Placeholder images in case data is missing
+  const secondImage = data[1] ? `http://localhost:5000${data[1].image}` : "https://via.placeholder.com/800?text=Image+1";
+  const thirdImage = data[2] ? `http://localhost:5000${data[2].image}` : "https://via.placeholder.com/600?text=Image+2";
 
   return (
     <section className={styles.mains}>

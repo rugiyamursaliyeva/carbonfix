@@ -1,4 +1,4 @@
-// Footer.jsx
+// frontend/src/components/footer/Footer.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -14,12 +14,7 @@ const Footer = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const data = useSelector((state) => state.product.product);
-  const loading = useSelector((state) => state.product.loading);
-  const error = useSelector((state) => state.product.error);
-
-  const [logoImage, setLogoImage] = useState("/images/default-footer-logo.jpg");
-  const [backgroundImage, setBackgroundImage] = useState("/images/default-footer-bg.jpg");
+  const { products: data = [], loading } = useSelector((state) => state.product);
 
   const BASE_URL = "http://localhost:5000";
 
@@ -27,12 +22,14 @@ const Footer = () => {
     dispatch(getProductThunk());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (data && data.length > 0) {
-      setLogoImage(data[0]?.image ? `${BASE_URL}${data[0].image}` : "/images/default-footer-logo.jpg");
-      setBackgroundImage(data[1]?.image ? `${BASE_URL}${data[1].image}` : "/images/default-footer-bg.jpg");
-    }
-  }, [data]);
+  // Fallbacks if data is missing
+  const logoImage = data && data.length > 0 && data[0]?.image
+    ? `${BASE_URL}${data[0].image}`
+    : "https://via.placeholder.com/200x80?text=CARBONFIX";
+
+  const backgroundImage = data && data.length > 1 && data[1]?.image
+    ? `${BASE_URL}${data[1].image}`
+    : (data && data.length > 0 ? `${BASE_URL}${data[0].image}` : "https://via.placeholder.com/1920x1080?text=Footer+Background");
 
   return (
     <footer className={styles.footer}>
@@ -43,17 +40,14 @@ const Footer = () => {
         <div className={styles.grid}>
           {/* Logo + Description */}
           <div className={styles.logoSection}>
-            <img 
-              src={logoImage} 
-              alt={t("footer.logoAlt")} 
-              className={styles.logoImg} 
+            <img
+              src={logoImage}
+              alt={t("footer.logoAlt")}
+              className={styles.logoImg}
               onError={(e) => {
-                e.target.src = "/images/default-footer-logo.jpg";
+                e.target.src = "https://via.placeholder.com/200x80?text=Logo+Error";
               }}
             />
-            {/* <p className={styles.description}>
-              {t("footer.description")}
-            </p> */}
           </div>
 
           {/* Contact */}
@@ -62,13 +56,13 @@ const Footer = () => {
             <div className={styles.contactInfo}>
               <div className={styles.contactItem}>
                 <p className={styles.label}>{t("footer.phoneLabel")}</p>
-                <a className={styles.link}>
+                <a className={styles.link} href={`tel:${t("footer.phoneNumber").replace(/\s/g, "")}`}>
                   {t("footer.phoneNumber")}
                 </a>
               </div>
               <div className={styles.contactItem}>
                 <p className={styles.label}>{t("footer.emailLabel")}</p>
-                <a className={styles.link} href="mailto:info@dpfcenter.az">
+                <a className={styles.link} href={`mailto:${t("footer.email")}`}>
                   {t("footer.email")}
                 </a>
               </div>
@@ -88,7 +82,7 @@ const Footer = () => {
             <div className={styles.socialIcons}>
               <a
                 className={styles.iconLink}
-                href="#"
+                href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("footer.facebookAria")}
@@ -97,7 +91,7 @@ const Footer = () => {
               </a>
               <a
                 className={styles.iconLink}
-                href="#"
+                href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("footer.instagramAria")}
@@ -106,7 +100,7 @@ const Footer = () => {
               </a>
               <a
                 className={styles.iconLink}
-                href="#"
+                href="https://tiktok.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("footer.tiktokAria")}

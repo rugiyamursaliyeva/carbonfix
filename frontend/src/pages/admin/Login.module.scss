@@ -1,0 +1,122 @@
+// frontend/src/pages/admin/Login.module.scss
+
+.loginPage {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+//   background-color: #0d0d0d;
+  padding: 20px;
+  margin-top: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.loginContainer {
+  max-width: 420px;
+  width: 100%;
+  padding: 40px 32px;
+  background: #171717;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid #1e1e1e;
+  color: #e0e0e0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 32px 0;
+    color: #ffffff;
+    letter-spacing: 0.8px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .errorMessage {
+    background: rgba(255, 82, 82, 0.15);
+    color: #ff5252;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    text-align: center;
+    border: 1px solid rgba(255, 82, 82, 0.3);
+    font-size: 0.95rem;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        color: #bbbbbb;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      input {
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        background: #171717;
+        border: 1px solid #2a2a2a;
+        border-radius: 8px;
+        color: #f0f0f0;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        font-family: Arial, Helvetica, sans-serif;
+
+        &:focus {
+          border-color: #fbbf24;
+          box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.25);
+          background: #1c1c1c;
+        }
+
+        &::placeholder {
+          color: #666;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+      }
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #111111;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35);
+      font-family: Arial, Helvetica, sans-serif;
+
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #fcd34d, #fbbf24);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(251, 191, 36, 0.5);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35);
+      }
+
+      &:disabled {
+        background: #2a2a2a;
+        color: #777;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+    }
+  }
+}

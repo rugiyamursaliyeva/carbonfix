@@ -1,37 +1,78 @@
-import ProductModel from "../models/productModule.js";
+// backend/controllers/productController.js
+import ProductModel from "../models/productModel.js";
 import fs from "fs";
 import path from "path";
 
-const getProduct = async (req, res) => {
-  const products = await ProductModel.find();
-  res.json(products);
+export const getProducts = async (req, res) => {
+  try {
+    const products = await ProductModel.find();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
-const postProducts = async (req, res) => {
-  const imagePath = "/carbon/" + req.file.filename;   
+export const postProduct = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const imagePath = "/carbon/" + req.file.filename;
 
-  const product = await ProductModel.create({
-    image: imagePath,
-  });
+    const product = await ProductModel.create({
+      title,
+      description,
+      image: imagePath,
+    });
 
-  res.json(product);
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
-const deleteProducts = async (req, res) => {
-  const { id } = req.params;
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+    const updateData = { title, description };
 
-  const product = await ProductModel.findById(id);
+    if (req.file) {
+      const product = await ProductModel.findById(id);
+      if (product && product.image) {
+        const oldFilePath = path.join("carbon", product.image.replace("/carbon/", ""));
+        fs.unlink(oldFilePath, (err) => {
+          if (err) console.error("Error deleting old image:", err);
+        });
+      }
+      updateData.image = "/carbon/" + req.file.filename;
+    }
 
-  const filePath = path.join(
-    "carbon",
-    product.image.replace("/carbon/", "")
-  );
+    const updatedProduct = await ProductModel.findByIdAndUpdate(id, updateData, { new: true });
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
-  fs.unlink(filePath, () => {});
-
-  await ProductModel.findByIdAndDelete(id);
-
-  res.json(`${id} -li product silindi`);
+    res.json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
-export { getProduct, postProducts, deleteProducts };
+export const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await ProductModel.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const filePath = path.join("carbon", product.image.replace("/carbon/", ""));
+    fs.unlink(filePath, (err) => {
+      if (err) console.error("Error deleting image:", err);
+    });
+
+    await ProductModel.findByIdAndDelete(id);
+    res.json({ message: `Product ${id} deleted` });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

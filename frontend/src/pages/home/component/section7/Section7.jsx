@@ -7,18 +7,18 @@ import { useTranslation } from "react-i18next";
 const Section7 = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { product: data, loading } = useSelector((state) => state.product);
+  const { products: data = [], loading } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProductThunk());
   }, [dispatch]);
 
   if (loading) return null;
-  if (!data || data.length < 2) return null;
+  if (!data || data.length === 0) return null;
 
-  // BACKEND ŞƏKİLLƏR
-  const backgroundImage = `http://localhost:5000${data[1].image}`; // 2-ci şəkil
-  const vehicleIcons = `http://localhost:5000${data[data.length - 1].image}`; // son şəkil
+  // Use the first image if multiple are not available
+  const backgroundImage = data[1] ? `http://localhost:5000${data[1].image}` : `http://localhost:5000${data[0].image}`;
+  const vehicleIcons = data[data.length - 1] ? `http://localhost:5000${data[data.length - 1].image}` : `http://localhost:5000${data[0].image}`;
 
   return (
     <section
