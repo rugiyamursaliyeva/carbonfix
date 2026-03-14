@@ -17,8 +17,9 @@ const Section7 = () => {
   if (!data || data.length === 0) return null;
 
   // Use the first image if multiple are not available
-  const backgroundImage = data[1] ? `http://localhost:5000${data[1].image}` : `http://localhost:5000${data[0].image}`;
-  const vehicleIcons = data[data.length - 1] ? `http://localhost:5000${data[data.length - 1].image}` : `http://localhost:5000${data[0].image}`;
+  const getImgUrl = (img) => img?.startsWith("http") || img?.startsWith("data:") ? img : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${img}`;
+  const backgroundImage = data[1] ? getImgUrl(data[1].image) : getImgUrl(data[0].image);
+  const vehicleIcons = data[data.length - 1] ? getImgUrl(data[data.length - 1].image) : getImgUrl(data[0].image);
 
   return (
     <section

@@ -48,8 +48,8 @@ const Section3 = () => {
               <div className={styles.card} key={index}>
                 <div className={styles.iconWrapper}>
                   <img
-                    src={`http://localhost:5000${item.image}`}
-                    alt=""
+                    src={item.image?.startsWith("http") || item.image?.startsWith("data:") ? item.image : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${item.image}`}
+                    alt={item.title || "Section 3 Image"}
                     className={styles.icon}
                     onError={(e) => { e.target.src = "https://via.placeholder.com/150"; }}
                   />

@@ -18,8 +18,9 @@ const Section1 = () => {
   if (!data || data.length === 0) return null;
 
   // Placeholder images in case data is missing
-  const secondImage = data[1] ? `http://localhost:5000${data[1].image}` : "https://via.placeholder.com/800?text=Image+1";
-  const thirdImage = data[2] ? `http://localhost:5000${data[2].image}` : "https://via.placeholder.com/600?text=Image+2";
+  const getImgUrl = (img) => img?.startsWith("http") || img?.startsWith("data:") ? img : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${img}`;
+  const secondImage = data[1] ? getImgUrl(data[1].image) : "https://via.placeholder.com/800?text=Image+1";
+  const thirdImage = data[2] ? getImgUrl(data[2].image) : "https://via.placeholder.com/600?text=Image+2";
 
   return (
     <section className={styles.mains}>

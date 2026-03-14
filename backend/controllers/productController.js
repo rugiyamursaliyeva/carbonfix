@@ -1,4 +1,3 @@
-// backend/controllers/productController.js
 import ProductModel from "../models/productModel.js";
 import fs from "fs";
 import path from "path";
@@ -15,16 +14,22 @@ export const getProducts = async (req, res) => {
 export const postProduct = async (req, res) => {
   try {
     const { title, description } = req.body;
-    const imagePath = "/carbon/" + req.file.filename;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "Şəkil yüklənməlidir" });
+    }
+
+    const imageUrl = `/uploads/${req.file.filename}`;
 
     const product = await ProductModel.create({
       title,
       description,
-      image: imagePath,
+      image: imageUrl,
     });
 
     res.status(201).json(product);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -36,14 +41,13 @@ export const updateProduct = async (req, res) => {
     const updateData = { title, description };
 
     if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+      // Optional: Delete old image
       const product = await ProductModel.findById(id);
-      if (product && product.image) {
-        const oldFilePath = path.join("carbon", product.image.replace("/carbon/", ""));
-        fs.unlink(oldFilePath, (err) => {
-          if (err) console.error("Error deleting old image:", err);
-        });
+      if (product && product.image && product.image.startsWith("/uploads/")) {
+        const oldPath = path.join(process.cwd(), product.image);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
       }
-      updateData.image = "/carbon/" + req.file.filename;
     }
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(id, updateData, { new: true });
@@ -53,6 +57,7 @@ export const updateProduct = async (req, res) => {
 
     res.json(updatedProduct);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -65,14 +70,16 @@ export const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    const filePath = path.join("carbon", product.image.replace("/carbon/", ""));
-    fs.unlink(filePath, (err) => {
-      if (err) console.error("Error deleting image:", err);
-    });
+    // Delete file from uploads
+    if (product.image && product.image.startsWith("/uploads/")) {
+      const oldPath = path.join(process.cwd(), product.image);
+      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    }
 
     await ProductModel.findByIdAndDelete(id);
     res.json({ message: `Product ${id} deleted` });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };

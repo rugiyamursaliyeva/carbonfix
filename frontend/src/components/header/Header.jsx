@@ -35,7 +35,7 @@ const Header = () => {
   useEffect(() => {
     const fetchLogo = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/product");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || "https://carbonfix.az"}/product`);
         if (res.data.length > 0) {
           setLogo(res.data[0].image); // birinci şəkil
         }
@@ -53,8 +53,8 @@ const Header = () => {
         <div className={styles.logo}>
           {logo ? (
             <img
-              src={`http://localhost:5000${logo}`}
-              alt="Logo"
+              src={logo?.startsWith("http") || logo?.startsWith("data:") ? logo : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${logo}`}
+              alt="Carbon Fix Logo"
               className={styles.logoImg}
             />
           ) : (

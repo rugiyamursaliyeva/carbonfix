@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL || "https://carbonfix.az";
+
 const initialState = {
   token: localStorage.getItem("adminToken") || null,
   isAuthenticated: !!localStorage.getItem("adminToken"),
@@ -13,7 +15,7 @@ export const loginAdmin = createAsyncThunk(
   "auth/loginAdmin",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/login", {
+      const res = await axios.post(`${BASE_URL}/api/admin/login`, {
         username,
         password,
       });

@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL || "https://carbonfix.az";
+
 const initialState = {
   products: [],           // ← mütləq array olmalıdır
   loading: false,
@@ -12,7 +14,7 @@ export const getProductThunk = createAsyncThunk(
   "product/getProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("http://localhost:5000/product");
+      const res = await axios.get(`${BASE_URL}/product`);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Şəkillər yüklənmədi");
@@ -25,7 +27,7 @@ export const postProductThunk = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const res = await axios.post("http://localhost:5000/product", formData, {
+      const res = await axios.post(`${BASE_URL}/product`, formData, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
           "Content-Type": "multipart/form-data",
@@ -43,7 +45,7 @@ export const updateProductThunk = createAsyncThunk(
   async ({ id, formData }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const res = await axios.put(`http://localhost:5000/product/${id}`, formData, {
+      const res = await axios.put(`${BASE_URL}/product/${id}`, formData, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
           "Content-Type": "multipart/form-data",
@@ -61,7 +63,7 @@ export const deleteProductThunk = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("adminToken");
-      await axios.delete(`http://localhost:5000/product/${id}`, {
+      await axios.delete(`${BASE_URL}/product/${id}`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
         },

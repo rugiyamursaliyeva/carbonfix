@@ -16,20 +16,16 @@ const Footer = () => {
 
   const { products: data = [], loading } = useSelector((state) => state.product);
 
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = import.meta.env.VITE_API_URL || "https://carbonfix.az";
+  const getImgUrl = (img) => img?.startsWith("http") || img?.startsWith("data:") ? img : `${BASE_URL}${img}`;
 
-  useEffect(() => {
-    dispatch(getProductThunk());
-  }, [dispatch]);
-
-  // Fallbacks if data is missing
   const logoImage = data && data.length > 0 && data[0]?.image
-    ? `${BASE_URL}${data[0].image}`
+    ? getImgUrl(data[0].image)
     : "https://via.placeholder.com/200x80?text=CARBONFIX";
 
   const backgroundImage = data && data.length > 1 && data[1]?.image
-    ? `${BASE_URL}${data[1].image}`
-    : (data && data.length > 0 ? `${BASE_URL}${data[0].image}` : "https://via.placeholder.com/1920x1080?text=Footer+Background");
+    ? getImgUrl(data[1].image)
+    : (data && data.length > 0 ? getImgUrl(data[0].image) : "https://via.placeholder.com/1920x1080?text=Footer+Background");
 
   return (
     <footer className={styles.footer}>
