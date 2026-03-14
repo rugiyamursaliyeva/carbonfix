@@ -16,8 +16,7 @@ const Footer = () => {
 
   const { products: data = [], loading } = useSelector((state) => state.product);
 
-  const BASE_URL = import.meta.env.VITE_API_URL || "https://carbonfix.az";
-  const getImgUrl = (img) => img?.startsWith("http") || img?.startsWith("data:") ? img : `${BASE_URL}${img}`;
+  const getImgUrl = (img) => img;
 
   const logoImage = data && data.length > 0 && data[0]?.image
     ? getImgUrl(data[0].image)

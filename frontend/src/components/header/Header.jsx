@@ -53,7 +53,7 @@ const Header = () => {
         <div className={styles.logo}>
           {logo ? (
             <img
-              src={logo?.startsWith("http") || logo?.startsWith("data:") ? logo : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${logo}`}
+              src={logo}
               alt="Carbon Fix Logo"
               className={styles.logoImg}
             />

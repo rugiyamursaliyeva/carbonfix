@@ -17,42 +17,30 @@ const Section1 = () => {
 
   if (!data || data.length === 0) return null;
 
-  // Placeholder images in case data is missing
-  const getImgUrl = (img) => img?.startsWith("http") || img?.startsWith("data:") ? img : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${img}`;
-  const secondImage = data[1] ? getImgUrl(data[1].image) : "https://via.placeholder.com/800?text=Image+1";
-  const thirdImage = data[2] ? getImgUrl(data[2].image) : "https://via.placeholder.com/600?text=Image+2";
+
 
   return (
     <section className={styles.mains}>
       <div className={styles.container}>
-
-        <div className={styles.leftSide}>
-          <img
-            src={secondImage}
-            alt="DPF Cleaning Machine"
-            className={styles.mainImage}
-          />
-          <div className={styles.textOverlay}>
-            <p className={styles.subtitle}>{t('subtitle')}</p>
-            <h1 className={styles.title}>
-              {t('titlePart1')}{' '}
-              <span className={styles.highlight}>{t('titleHighlight')}</span>{' '}
-              {t('titlePart2')}
-            </h1>
-            <p className={styles.description}>
-              {t('description')}
-            </p>
+        {data.map((product) => (
+          <div key={product._id} className={styles.productItem} style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
+            <div className={styles.leftSide}>
+              <img
+                src={product.image}
+                alt={product.title}
+                className={styles.mainImage}
+              />
+              <div className={styles.textOverlay}>
+                <h1 className={styles.title}>
+                  {product.title}
+                </h1>
+                <p className={styles.description}>
+                  {product.description}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className={styles.rightSide}>
-          <img
-            src={thirdImage}
-            alt="DPF Cleaner Side View"
-            className={styles.sideImage}
-          />
-        </div>
-
+        ))}
       </div>
     </section>
   );

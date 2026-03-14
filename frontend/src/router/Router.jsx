@@ -9,14 +9,15 @@ import Login from '../pages/admin/Login';
 const Router = () => {
   return (
     <BrowserRouter>
-    <Routes>
-        <Route element={<Layout/>}>
-          <Route path='/' element={<Home/>}/>    
-          <Route path='/admin' element={<Admin/>}/>  
-          <Route path='/admin-login' element={<Login/>}/>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/admin-login' element={<Login />} />
+          <Route path='/login' element={<Login />} />
         </Route>
-        <Route path='*' element={<NotFound/>}/>
-    </Routes>
+        <Route path='*' element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   )
 }

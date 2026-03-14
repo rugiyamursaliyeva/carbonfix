@@ -214,7 +214,7 @@ const Admin = () => {
         {products.map((product) => (
           <div key={product._id} className={styles.imageItem}>
             <img
-              src={product.image?.startsWith("http") || product.image?.startsWith("data:image") ? product.image : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${product.image}`}
+              src={product.image}
               alt={product.title}
               className={styles.imagePreview}
               onError={(e) => { e.target.src = "https://via.placeholder.com/300?text=Error+Loading+Image"; }}

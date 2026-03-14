@@ -16,10 +16,12 @@ const Section7 = () => {
   if (loading) return null;
   if (!data || data.length === 0) return null;
 
-  // Use the first image if multiple are not available
-  const getImgUrl = (img) => img?.startsWith("http") || img?.startsWith("data:") ? img : `${import.meta.env.VITE_API_URL || "https://carbonfix.az"}${img}`;
-  const backgroundImage = data[1] ? getImgUrl(data[1].image) : getImgUrl(data[0].image);
-  const vehicleIcons = data[data.length - 1] ? getImgUrl(data[data.length - 1].image) : getImgUrl(data[0].image);
+  // Seall products by title to find appropriate images (e.g. background and icons)
+  const backgroundProduct = data.find(p => p.title.toLowerCase().includes("back")) || data[0];
+  const vehicleProduct = data.find(p => p.title.toLowerCase().includes("icon")) || data[data.length - 1];
+
+  const backgroundImage = backgroundProduct.image;
+  const vehicleIcons = vehicleProduct.image;
 
   return (
     <section
