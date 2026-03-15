@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [logo, setLogo] = useState(null);
+  const { products: data = [] } = useSelector((state) => state.product);
+  const logo = data.length > 0 ? data[0].image : null;
 
   const languages = [
     { code: "az", label: "AZ" },
@@ -31,21 +33,6 @@ const Header = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  // Backend-dən ilk şəkli götür
-  useEffect(() => {
-    const fetchLogo = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL || "https://carbonfix.az"}/product`);
-        if (res.data.length > 0) {
-          setLogo(res.data[0].image); // birinci şəkil
-        }
-      } catch (error) {
-        console.error("Logo image load error:", error);
-      }
-    };
-    fetchLogo();
-  }, []);
-
   return (
     <section className={styles.header}>
       <div className={styles.head}>
@@ -58,7 +45,7 @@ const Header = () => {
               className={styles.logoImg}
             />
           ) : (
-            <span>Loading...</span>
+            <h1 style={{ color: '#fbbf24', fontSize: '1.5rem', fontWeight: 'bold' }}>CARBON FIX DPF</h1>
           )}
         </div>
 

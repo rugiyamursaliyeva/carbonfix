@@ -15,15 +15,11 @@ const Section1 = () => {
 
   if (loading) return null;
 
-  if (!data || data.length === 0) return null;
-
-
-
   return (
     <section className={styles.mains}>
       <div className={styles.container}>
         {data.map((product) => (
-          <div key={product._id} className={styles.productItem} style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
+          <div key={product._id} className={styles.productItem}>
             <div className={styles.leftSide}>
               <img
                 src={product.image}

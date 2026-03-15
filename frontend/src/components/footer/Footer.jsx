@@ -20,15 +20,18 @@ const Footer = () => {
 
   const logoImage = data && data.length > 0 && data[0]?.image
     ? getImgUrl(data[0].image)
-    : "https://via.placeholder.com/200x80?text=CARBONFIX";
+    : null;
 
   const backgroundImage = data && data.length > 1 && data[1]?.image
     ? getImgUrl(data[1].image)
-    : (data && data.length > 0 ? getImgUrl(data[0].image) : "https://via.placeholder.com/1920x1080?text=Footer+Background");
+    : (data && data.length > 0 ? getImgUrl(data[0].image) : null);
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.background} style={{ backgroundImage: `url(${backgroundImage})` }} />
+      <div
+        className={styles.background}
+        style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : { backgroundColor: '#111' }}
+      />
       <div className={styles.overlay}></div>
 
       <div className={styles.container}>
@@ -40,9 +43,10 @@ const Footer = () => {
               alt={t("footer.logoAlt")}
               className={styles.logoImg}
               onError={(e) => {
-                e.target.src = "https://via.placeholder.com/200x80?text=Logo+Error";
+                e.target.style.display = 'none';
               }}
             />
+            {!logoImage && <h2 style={{ color: '#fbbf24', margin: 0 }}>CARBONFIX</h2>}
           </div>
 
           {/* Contact */}

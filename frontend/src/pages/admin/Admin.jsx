@@ -217,7 +217,7 @@ const Admin = () => {
               src={product.image}
               alt={product.title}
               className={styles.imagePreview}
-              onError={(e) => { e.target.src = "https://via.placeholder.com/300?text=Error+Loading+Image"; }}
+              onError={(e) => { e.target.style.display = 'none'; }}
             />
             <div style={{ padding: "15px" }}>
               <h4 style={{ margin: "0 0 8px" }}>{product.title}</h4>

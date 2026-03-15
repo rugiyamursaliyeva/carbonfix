@@ -16,34 +16,14 @@ const Section3 = () => {
     dispatch(getProductThunk())
   }, [dispatch])
 
-  // i18n-dən kartların məlumatlarını əldə edirik
-  const cardsData = [
-    {
-      key: 'soot',
-      title: t('cards.sootTitle'),
-      desc: t('cards.sootDesc')
-    },
-    {
-      key: 'oil',
-      title: t('cards.oilTitle'),
-      desc: t('cards.oilDesc')
-    },
-    {
-      key: 'block',
-      title: t('cards.blockTitle'),
-      desc: t('cards.blockDesc')
-    }
-  ]
-
-  if (loading) return null
-  if (!data || data.length === 0) return null
+  if (loading) return null;
+  if (!data || data.length === 0) return null;
 
   return (
     <section className={styles.main}>
       <div className={styles.group}>
         <div className={styles.cards}>
-          {(data.length >= 6 ? data.slice(3, 6) : data.slice(0, 3)).map((item, index) => {
-            const cardInfo = cardsData[index] || cardsData[0]
+          {data.map((item, index) => {
             return (
               <div className={styles.card} key={index}>
                 <div className={styles.iconWrapper}>
@@ -51,18 +31,18 @@ const Section3 = () => {
                     src={item.image}
                     alt={item.title || "Section 3 Image"}
                     className={styles.icon}
-                    onError={(e) => { e.target.src = "https://via.placeholder.com/150"; }}
+                    onError={(e) => { e.target.style.display = 'none'; }}
                   />
                 </div>
-                <h3 className={styles.title}>{cardInfo.title}</h3>
-                <p className={styles.desc}>{cardInfo.desc}</p>
+                <h3 className={styles.title}>{item.title}</h3>
+                <p className={styles.desc}>{item.description}</p>
               </div>
             )
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default Section3
