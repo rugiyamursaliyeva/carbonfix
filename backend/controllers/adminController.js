@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey123";
 
@@ -71,7 +72,7 @@ export const updateProduct = async (req, res) => {
       const product = await ProductModel.findById(id);
       if (product && product.image && product.image.includes("/uploads/")) {
         const filename = product.image.split("/").pop();
-        const oldPath = path.join(process.cwd(), "uploads", filename);
+        const oldPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "uploads", filename);
         if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
       }
     }
@@ -95,7 +96,7 @@ export const deleteProduct = async (req, res) => {
 
     if (product.image && product.image.includes("/uploads/")) {
       const filename = product.image.split("/").pop();
-      const oldPath = path.join(process.cwd(), "uploads", filename);
+      const oldPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "uploads", filename);
       if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
     }
 
